@@ -1,4 +1,4 @@
-use rand::{Rng, RngExt};
+use rand::{RngExt};
 use std::io;
 use std::cmp::Ordering;
 
@@ -16,6 +16,7 @@ fn main() {
         count += 1;
 
         println!("Input your guess");
+
         // Create guess string
         let mut guess: String = String::new();
 
@@ -25,7 +26,13 @@ fn main() {
             .expect("Failed to read line.");
 
         // Covert guess string to an integer
-        let guess: u32 = guess.trim().parse().expect("Please type a valid number!");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Please enter a valid number!");
+                continue;
+            }
+        };
 
         println!("You guessed {}", guess);
 
